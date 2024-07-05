@@ -1,8 +1,8 @@
 <script setup>
 import Web3 from 'web3';
 
-import Menu from "@/components/icons/Menu.vue";
-import Close from "@/components/icons/Close.vue";
+import MenuIcon from "@/components/icons/Menu.vue";
+import CloseIcon from "@/components/icons/Close.vue";
 import {ref} from "vue";
 
 const isMenuEnabled = ref(false);
@@ -38,16 +38,13 @@ async function connectWallet(){
 	<nav>
 		<ul class="sidebar" v-if="isMenuEnabled">
 			<li>
-				<a href="#" @click="toggleMenu"><Close/></a>
+				<a href="#" @click="toggleMenu"><CloseIcon/></a>
 			</li>
 			<li>
-				<a href="#">DEX</a>
+        <RouterLink to="/">Swap</RouterLink>
 			</li>
 			<li>
-				<a href="#">Swap</a>
-			</li>
-			<li>
-				<a href="#">Launchpool</a>
+        <RouterLink to="/launchpools">Launchpool</RouterLink>
 			</li>
 			<li>
 				<a href="#" @click="connectWallet">{{ account ? `Connected with: ${account.substring(0, 100)}` : "Connect metamask" }}</a>
@@ -56,19 +53,19 @@ async function connectWallet(){
 
 		<ul>
 			<li>
-				<a id="Logo" href="#">DEX</a>
+				<RouterLink class="logo" to="/">DEX</RouterLink>
 			</li>
 			<li class="hideOnMobile">
-				<a href="#">Swap</a>
+				<RouterLink to="/">Swap</RouterLink>
 			</li>
 			<li class="hideOnMobile">
-				<a href="#">Launchpool</a>
+				<RouterLink to="/launchpools">Launchpool</RouterLink>
 			</li>
 			<li class="hideOnMobile">
 				<a href="#" @click="connectWallet">{{ account ? account : "Connect metamask" }}</a>
 			</li>
 			<li class="menu-button">
-				<a href="#" @click="toggleMenu"><Menu/></a>
+				<a href="#" @click="toggleMenu"><MenuIcon/></a>
 			</li>
 		</ul>
 	</nav>

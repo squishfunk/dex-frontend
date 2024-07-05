@@ -1,5 +1,13 @@
 @import './base.css';
 
+:root {
+  --main-bg-color: rgb(200, 208, 255);
+  --main-color: rgb(106, 119, 224);
+  --input-color: rgb(239, 239, 239);
+  --shadow-1: rgba(0, 0, 0, 0.25);
+  --shadow-2: rgba(0, 0, 0, 0.15);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -7,8 +15,15 @@
 
 body {
   min-height: 100vh;
-  background: rgb(200, 208, 255);
+
+  background: var(--main-bg-color);
   background: radial-gradient(circle, rgb(255, 255, 255) 0%, rgb(216, 209, 255) 100%);
 
   font-family: "Helvetica Neue", Helvetica, sans-serif;
+
+  box-sizing: border-box;
+}
+
+#app {
+  min-height: 100vh;
 }
