@@ -1,7 +1,15 @@
-<script>
-export default {
-  name: "SwapView"
-}
+<script setup>
+import {ref} from "vue";
+
+const baseValue = ref(0);
+const targetValue = ref(0);
+const rate = ref(0.5);
+
+const calculateTargetValue = () =>{
+console.log('xd');
+	targetValue.value = baseValue.value * rate.value;
+};
+
 </script>
 
 <template>
@@ -11,11 +19,11 @@ export default {
     <div class="controls">
       <div class="control">
         <button id="base">USD</button>
-        <input type="number" id="base-input" value="0" min="0" />
+        <input type="number" id="base-input" value="0" min="0" v-model="baseValue" @input="calculateTargetValue"/>
       </div>
       <div class="control">
         <button id="target">EUR</button>
-        <input type="number" id="target-input" value="0" min="0" readonly/>
+        <input type="number" id="target-input" v-model="targetValue" min="0" readonly/>
       </div>
       <button class="swap-btn">swap</button>
     </div>
