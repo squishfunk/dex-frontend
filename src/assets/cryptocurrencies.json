@@ -1,0 +1,102 @@
+[
+  {
+    "name": "Bitcoin",
+    "symbol": "BTC",
+    "icon": "https://cryptologos.cc/logos/bitcoin-btc-logo.png"
+  },
+  {
+    "name": "Ethereum",
+    "symbol": "ETH",
+    "icon": "https://cryptologos.cc/logos/ethereum-eth-logo.png"
+  },
+  {
+    "name": "Tether",
+    "symbol": "USDT",
+    "icon": "https://cryptologos.cc/logos/tether-usdt-logo.png"
+  },
+  {
+    "name": "Binance Coin",
+    "symbol": "BNB",
+    "icon": "https://cryptologos.cc/logos/binance-coin-bnb-logo.png"
+  },
+  {
+    "name": "USD Coin",
+    "symbol": "USDC",
+    "icon": "https://cryptologos.cc/logos/usd-coin-usdc-logo.png"
+  },
+  {
+    "name": "XRP",
+    "symbol": "XRP",
+    "icon": "https://cryptologos.cc/logos/xrp-xrp-logo.png"
+  },
+  {
+    "name": "Cardano",
+    "symbol": "ADA",
+    "icon": "https://cryptologos.cc/logos/cardano-ada-logo.png"
+  },
+  {
+    "name": "Dogecoin",
+    "symbol": "DOGE",
+    "icon": "https://cryptologos.cc/logos/dogecoin-doge-logo.png"
+  },
+  {
+    "name": "Solana",
+    "symbol": "SOL",
+    "icon": "https://cryptologos.cc/logos/solana-sol-logo.png"
+  },
+  {
+    "name": "Polkadot",
+    "symbol": "DOT",
+    "icon": "https://cryptologos.cc/logos/polkadot-new-dot-logo.png"
+  },
+  {
+    "name": "Polygon",
+    "symbol": "MATIC",
+    "icon": "https://cryptologos.cc/logos/polygon-matic-logo.png"
+  },
+  {
+    "name": "Litecoin",
+    "symbol": "LTC",
+    "icon": "https://cryptologos.cc/logos/litecoin-ltc-logo.png"
+  },
+  {
+    "name": "Avalanche",
+    "symbol": "AVAX",
+    "icon": "https://cryptologos.cc/logos/avalanche-avax-logo.png"
+  },
+  {
+    "name": "Chainlink",
+    "symbol": "LINK",
+    "icon": "https://cryptologos.cc/logos/chainlink-link-logo.png"
+  },
+  {
+    "name": "Stellar",
+    "symbol": "XLM",
+    "icon": "https://cryptologos.cc/logos/stellar-xlm-logo.png"
+  },
+  {
+    "name": "Cosmos",
+    "symbol": "ATOM",
+    "icon": "https://cryptologos.cc/logos/cosmos-atom-logo.png"
+  },
+  {
+    "name": "Monero",
+    "symbol": "XMR",
+    "icon": "https://cryptologos.cc/logos/monero-xmr-logo.png"
+  },
+  {
+    "name": "Algorand",
+    "symbol": "ALGO",
+    "icon": "https://cryptologos.cc/logos/algorand-algo-logo.png"
+  },
+  {
+    "name": "Bitcoin Cash",
+    "symbol": "BCH",
+    "icon": "https://cryptologos.cc/logos/bitcoin-cash-bch-logo.png"
+  },
+  {
+    "name": "VeChain",
+    "symbol": "VET",
+    "icon": "https://cryptologos.cc/logos/vechain-vet-logo.png"
+  }
+]

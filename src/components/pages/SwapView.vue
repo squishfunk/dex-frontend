@@ -1,46 +1,99 @@
 <script setup>
 import {ref} from "vue";
+import Popup from "@/components/CurrencyPopup.vue";
+import tokens from "../../assets/cryptocurrencies.json";
+import Dropdown from "@/components/icons/Dropdown.vue";
+
 
 const baseValue = ref(0);
 const targetValue = ref(0);
 const rate = ref(0.5);
 
-const calculateTargetValue = () =>{
-console.log('xd');
+const tokenSelectPopup = ref({
+    isVisible: false,
+    from: null,
+})
+
+const selectedTokens = ref({
+  base: {
+    name: "Tether",
+    symbol: 'USDT',
+    icon: "https://cryptologos.cc/logos/tether-usdt-logo.png",
+  },
+  target: {
+    name: "Bitcoin",
+    symbol: 'BTC',
+    icon: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
+  },
+})
+
+const TogglePopup = (from) => {
+  tokenSelectPopup.value.isVisible = !tokenSelectPopup.value.isVisible;
+  tokenSelectPopup.value.from = from;
+}
+
+const calculateTargetValue = () => {
+   /* TODO */
 	targetValue.value = baseValue.value * rate.value;
 };
+
+const selectToken = (token) => {
+  if(tokenSelectPopup.value.from === 'base'){
+    selectedTokens.value.base = token;
+  }else if(tokenSelectPopup.value.from === 'target'){
+    selectedTokens.value.target = token;
+  }
+
+  TogglePopup();
+}
 
 </script>
 
 <template>
   <div class="card">
-    <h1>SWAP</h1>
 
     <div class="controls">
       <div class="control">
-        <button id="base">USD</button>
         <input type="number" id="base-input" value="0" min="0" v-model="baseValue" @input="calculateTargetValue"/>
+        <button id="base" @click="() => TogglePopup('base')" class="token-button">
+          <img :src="selectedTokens.base.icon" alt="baseIcon" width="20px" height="20px">
+          <div class="token-symbol">
+            {{ selectedTokens.base.symbol }}
+          </div>
+          <Dropdown />
+        </button>
       </div>
       <div class="control">
-        <button id="target">EUR</button>
         <input type="number" id="target-input" v-model="targetValue" min="0" readonly/>
+        <button id="base" @click="() => TogglePopup('target')" class="token-button">
+          <img :src="selectedTokens.target.icon" alt="baseIcon" width="20px" height="20px">
+          <div class="token-symbol">
+            {{ selectedTokens.target.symbol }}
+          </div>
+          <Dropdown />
+        </button>
       </div>
-      <button class="swap-btn">swap</button>
+      <button class="swap-btn">
+        Zamień
+      </button>
     </div>
 
     <div class="exchange-rate">
       test
     </div>
   </div>
+  <Transition >
+    <Popup @select-token="selectToken" :tokens="tokens" :TogglePopup="() => TogglePopup()" v-if="tokenSelectPopup.isVisible">
+    </Popup>
+  </Transition>
 </template>
 
 <style scoped>
 
 .card{
-  background: white;
-  box-shadow: 25px 25px 25px var(--shadow-1);
+  /*background: var(--main-bg-color);*/
   justify-content: center;
-  border-radius: 10px;
+  border-radius: var(--input-border-radius);
   width: 75%;
   display: grid;
   gap: 30px;
@@ -56,7 +109,7 @@ button {
 
 .card h1 {
   text-align: center;
-  color: var(--main-color);
+  color: var(--main-contrast-color-text);
 }
 
 .controls {
@@ -67,33 +120,27 @@ button {
 
 .control {
   display: flex;
-  background: var(--input-color); /* Inny */
-  box-shadow: 10px 10px 3px var(--main-bg-color);
-  border-radius: 10px;
+  background: var(--main-second-bg-color);
+  border-radius: var(--input-border-radius);
   overflow: hidden;
+  align-items: center;
+  border: 1px solid var(--text-color-second);
 }
 
-.control button {
-  --image: url(https://placehold.co/30/teal/white?text=$);
-  font-weight: 600;
-  background: transparent;
-  margin-left: 20px;
+.token-button {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
+  background: var(--main-bg-color);
+  margin-right: 25px;
+  padding: 5px;
+  border-radius: var(--input-border-radius);
+  border: 1px solid var(--text-color-second);
 }
 
-.control button::before {
-  content: '';
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: teal var(--image) center no-repeat;
-}
 
 .control input {
   font-size:2.5rem;
-  text-align: end;
   background: transparent;
   width: 100%;
   border: none;
@@ -105,6 +152,14 @@ button {
 .control input::-webkit-outer-spin-button {
   appearance: none;
 
+}
+
+.swap-btn {
+  background-color: var(--main-contrast-color);
+  border-radius: var(--input-border-radius);
+  color: var(--main-contrast-color-text);
+  height: 5rem;
+  font-weight: 500;
 }
 
 </style>

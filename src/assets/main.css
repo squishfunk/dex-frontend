@@ -1,11 +1,37 @@
 @import './base.css';
 
 :root {
-  --main-bg-color: rgb(200, 208, 255);
+  --main-bg-color: rgb(255 255 255);
+  --main-second-bg-color: rgb(239 239 239);
+  --main-bg-color-hover: rgb(100, 108, 155);
+  --main-contrast-color: rgb(255 239 255);
+  --main-contrast-color-text: rgb(252 114 255);
+
+
+  --text-color: black;
+  --text-color-second: #282828;
   --main-color: rgb(106, 119, 224);
-  --input-color: rgb(239, 239, 239);
+
   --shadow-1: rgba(0, 0, 0, 0.25);
   --shadow-2: rgba(0, 0, 0, 0.15);
+
+  --input-border-radius: 34px;
+}
+
+html.dark {
+  color-scheme: dark;
+  --main-bg-color: #131313;
+  --main-second-bg-color: #242424;
+  --main-bg-color-hover: #353535;
+  --main-contrast-color: rgb(49 28 49);
+  --main-contrast-color-text: rgb(252 114 255);
+
+
+  --main-color: rgb(5, 5, 5);
+  --text-color: #ffffff;
+  --text-color-second: #505050;
+
+  --shadow-1: rgba(255, 0, 0, 0.25);
 }
 
 * {
@@ -17,7 +43,7 @@ body {
   min-height: 100vh;
 
   background: var(--main-bg-color);
-  background: radial-gradient(circle, rgb(255, 255, 255) 0%, rgb(216, 209, 255) 100%);
+  background: radial-gradient(circle, var(--main-second-bg-color) 0%, var(--main-bg-color) 100%);
 
   font-family: "Helvetica Neue", Helvetica, sans-serif;
 
@@ -26,4 +52,8 @@ body {
 
 #app {
   min-height: 100vh;
+}
+
+svg {
+  fill: var(--text-color);
 }

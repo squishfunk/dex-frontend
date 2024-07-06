@@ -4,6 +4,8 @@ import Web3 from 'web3';
 import MenuIcon from "@/components/icons/Menu.vue";
 import CloseIcon from "@/components/icons/Close.vue";
 import {ref} from "vue";
+import ThemeSwitch from "@/components/elements/ThemeSwitch.vue";
+import Logo from "@/components/icons/Logo.vue";
 
 const isMenuEnabled = ref(false);
 
@@ -49,11 +51,13 @@ async function connectWallet(){
 			<li>
 				<a href="#" @click="connectWallet">{{ account ? `Connected with: ${account.substring(0, 100)}` : "Connect metamask" }}</a>
 			</li>
+      <li>
+        <ThemeSwitch/>
+      </li>
 		</ul>
-
 		<ul>
 			<li>
-				<RouterLink class="logo" to="/">DEX</RouterLink>
+				<RouterLink class="logo" to="/"><Logo/></RouterLink>
 			</li>
 			<li class="hideOnMobile">
 				<RouterLink to="/">Swap</RouterLink>
@@ -64,6 +68,11 @@ async function connectWallet(){
 			<li class="hideOnMobile">
 				<a href="#" @click="connectWallet">{{ account ? account : "Connect metamask" }}</a>
 			</li>
+      <li class="hideOnMobile">
+        <div class="switch-control">
+          <ThemeSwitch/>
+        </div>
+      </li>
 			<li class="menu-button">
 				<a href="#" @click="toggleMenu"><MenuIcon/></a>
 			</li>
@@ -72,8 +81,18 @@ async function connectWallet(){
 </template>
 
 <style scoped>
+.logo {
+  fill: var(--main-contrast-color-text);
+  width: 30px;
+}
+
+.logo svg {
+  fill: var(--main-contrast-color-text);
+}
+
+
 nav {
-	background-color: white;
+	background-color: var(--main-bg-color);
 	box-shadow: 3px 3px 5px rgba(0,0,0,0.1);
 }
 
@@ -92,14 +111,14 @@ nav li {
 nav a{
 	height: 100%;
 	padding: 0 30px;
-	color: black;
+	color: var(--text-color);
 	text-decoration: none;
 	display: flex;
 	align-items: center;
 }
 
 nav a:hover{
-	background-color: #f0f0f0;
+	background-color: var(--main-bg-color-hover);
 }
 
 nav li:first-child {
@@ -128,6 +147,10 @@ nav li:first-child {
 
 .sidebar a {
 	width: 100%;
+}
+
+.sidebar li:last-child{
+  margin-top: auto;
 }
 
 .menu-button {
