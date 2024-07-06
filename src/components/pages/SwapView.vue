@@ -130,7 +130,6 @@ button {
   border-radius: var(--input-border-radius);
   overflow: hidden;
   align-items: center;
-  border: 1px solid var(--text-color-second);
 }
 
 .token-button {
@@ -148,13 +147,8 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-}
-
-.change-direction-wrapper {
+  gap: 3px;
   position: relative;
-  width: 0;
-  height: 0;
 }
 
 .change-direction {
@@ -162,11 +156,17 @@ button {
   justify-content: center;
   width: 40px;
   height: 40px;
+  padding: 5px;
   align-items: center;
   position: absolute;
   background-color: var(--main-second-bg-color);
   border-radius: 50%;
-  border: 1px solid var(--text-color-second);
+  border: 3px solid var(--main-bg-color);
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: auto;
 }
 
 .control input {

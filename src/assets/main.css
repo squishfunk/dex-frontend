@@ -41,12 +41,8 @@ html.dark {
 
 body {
   min-height: 100vh;
-
   background: var(--main-bg-color);
-  background: radial-gradient(circle, var(--main-second-bg-color) 0%, var(--main-bg-color) 100%);
-
   font-family: "Helvetica Neue", Helvetica, sans-serif;
-
   box-sizing: border-box;
 }
 
