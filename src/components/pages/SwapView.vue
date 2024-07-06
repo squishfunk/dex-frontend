@@ -3,6 +3,7 @@ import {ref} from "vue";
 import Popup from "@/components/CurrencyPopup.vue";
 import tokens from "../../assets/cryptocurrencies.json";
 import Dropdown from "@/components/icons/Dropdown.vue";
+import Change from "@/components/icons/Change.vue";
 
 
 const baseValue = ref(0);
@@ -53,25 +54,30 @@ const selectToken = (token) => {
   <div class="card">
 
     <div class="controls">
-      <div class="control">
-        <input type="number" id="base-input" value="0" min="0" v-model="baseValue" @input="calculateTargetValue"/>
-        <button id="base" @click="() => TogglePopup('base')" class="token-button">
-          <img :src="selectedTokens.base.icon" alt="baseIcon" width="20px" height="20px">
-          <div class="token-symbol">
-            {{ selectedTokens.base.symbol }}
-          </div>
-          <Dropdown />
+      <div class="inputs">
+        <div class="control">
+          <input type="number" id="base-input" value="0" min="0" v-model="baseValue" @input="calculateTargetValue"/>
+          <button id="base" @click="() => TogglePopup('base')" class="token-button">
+            <img :src="selectedTokens.base.icon" alt="baseIcon" width="20px" height="20px">
+            <div class="token-symbol">
+              {{ selectedTokens.base.symbol }}
+            </div>
+            <Dropdown />
+          </button>
+        </div>
+        <button class="change-direction">
+          <Change />
         </button>
-      </div>
-      <div class="control">
-        <input type="number" id="target-input" v-model="targetValue" min="0" readonly/>
-        <button id="base" @click="() => TogglePopup('target')" class="token-button">
-          <img :src="selectedTokens.target.icon" alt="baseIcon" width="20px" height="20px">
-          <div class="token-symbol">
-            {{ selectedTokens.target.symbol }}
-          </div>
-          <Dropdown />
-        </button>
+        <div class="control">
+          <input type="number" id="target-input" v-model="targetValue" min="0" readonly/>
+          <button id="base" @click="() => TogglePopup('target')" class="token-button">
+            <img :src="selectedTokens.target.icon" alt="baseIcon" width="20px" height="20px">
+            <div class="token-symbol">
+              {{ selectedTokens.target.symbol }}
+            </div>
+            <Dropdown />
+          </button>
+        </div>
       </div>
       <button class="swap-btn">
         Zamień
@@ -138,6 +144,30 @@ button {
   border: 1px solid var(--text-color-second);
 }
 
+.inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.change-direction-wrapper {
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+.change-direction {
+  display: flex;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  position: absolute;
+  background-color: var(--main-second-bg-color);
+  border-radius: 50%;
+  border: 1px solid var(--text-color-second);
+}
 
 .control input {
   font-size:2.5rem;
@@ -160,6 +190,7 @@ button {
   color: var(--main-contrast-color-text);
   height: 5rem;
   font-weight: 500;
+  border: 1px solid var(--text-color-second);
 }
 
 </style>
