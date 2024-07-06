@@ -48,6 +48,10 @@ const selectToken = (token) => {
   TogglePopup();
 }
 
+const changeSideSwap = () => {
+  [selectedTokens.value.base, selectedTokens.value.target] = [selectedTokens.value.target, selectedTokens.value.base];
+}
+
 </script>
 
 <template>
@@ -65,7 +69,7 @@ const selectToken = (token) => {
             <Dropdown />
           </button>
         </div>
-        <button class="change-direction">
+        <button class="change-direction" @click="changeSideSwap">
           <Change />
         </button>
         <div class="control">
@@ -82,10 +86,6 @@ const selectToken = (token) => {
       <button class="swap-btn">
         Zamień
       </button>
-    </div>
-
-    <div class="exchange-rate">
-      test
     </div>
   </div>
   <Transition >
@@ -170,12 +170,12 @@ button {
 }
 
 .control input {
-  font-size:2.5rem;
+  font-size:2rem;
   background: transparent;
   width: 100%;
   border: none;
   outline: none;
-  padding: 10px 20px;
+  padding: 30px 15px;
 }
 
 .control input::-webkit-inner-spin-button,
@@ -190,7 +190,6 @@ button {
   color: var(--main-contrast-color-text);
   height: 5rem;
   font-weight: 500;
-  border: 1px solid var(--text-color-second);
 }
 
 </style>
