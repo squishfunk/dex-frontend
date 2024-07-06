@@ -3,7 +3,7 @@ import Web3 from 'web3';
 
 import MenuIcon from "@/components/icons/Menu.vue";
 import CloseIcon from "@/components/icons/Close.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import ThemeSwitch from "@/components/elements/ThemeSwitch.vue";
 import Logo from "@/components/icons/Logo.vue";
 
@@ -13,6 +13,10 @@ function toggleMenu() {
 	isMenuEnabled.value = !isMenuEnabled.value;
 }
 
+
+onMounted(() => {
+  connectWallet();
+})
 
 const web3 = ref(null);
 const account = ref(null);
@@ -155,6 +159,12 @@ nav li:first-child {
 
 .menu-button {
 	display: none;
+}
+
+.switch-control {
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 @media (max-width: 800px) {

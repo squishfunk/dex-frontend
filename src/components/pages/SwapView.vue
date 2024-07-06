@@ -130,6 +130,7 @@ button {
   border-radius: var(--input-border-radius);
   overflow: hidden;
   align-items: center;
+  width: 100%;
 }
 
 .token-button {
