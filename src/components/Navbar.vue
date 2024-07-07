@@ -53,8 +53,13 @@ async function connectWallet(){
         <RouterLink to="/launchpools">Launchpool</RouterLink>
 			</li>
 			<li>
-				<a href="#" @click="connectWallet">{{ account ? `Connected with: ${account.substring(0, 100)}` : "Connect metamask" }}</a>
-			</li>
+        <template v-if="account">
+          <RouterLink to="/profile">{{ account }}</RouterLink>
+        </template>
+        <template v-else>
+          <a href="#" @click="connectWallet">{{ account ? account : "Connect metamask" }}</a>
+        </template>
+      </li>
       <li>
         <ThemeSwitch/>
       </li>
@@ -70,7 +75,12 @@ async function connectWallet(){
 				<RouterLink to="/launchpools">Launchpool</RouterLink>
 			</li>
 			<li class="hideOnMobile">
-				<a href="#" @click="connectWallet">{{ account ? account : "Connect metamask" }}</a>
+        <template v-if="account">
+          <RouterLink to="/profile">{{ account }}</RouterLink>
+        </template>
+        <template v-else>
+          <a href="#" @click="connectWallet">{{ account ? account : "Connect metamask" }}</a>
+        </template>
 			</li>
       <li class="hideOnMobile">
         <div class="switch-control">

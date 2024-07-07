@@ -3,10 +3,6 @@ import Close from "@/components/icons/Close.vue";
 
 const props = defineProps(['TogglePopup', 'tokens'])
 
-const selectToken = (token) => {
-    console.log(token);
-}
-
 </script>
 
 <template>
@@ -14,9 +10,7 @@ const selectToken = (token) => {
     <div class="popup-inner">
       <div class="top-popup">
         Wybierz Token
-        <Close class="popup-close" @click="TogglePopup()">
-          Close Popup
-        </Close>
+        <Close class="popup-close" @click="TogglePopup()" />
       </div>
 
       <div class="token-list">
