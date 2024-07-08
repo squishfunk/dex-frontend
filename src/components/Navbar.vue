@@ -1,5 +1,4 @@
 <script setup>
-import Web3 from 'web3';
 
 import MenuIcon from "@/components/icons/Menu.vue";
 import CloseIcon from "@/components/icons/Close.vue";
@@ -13,31 +12,10 @@ function toggleMenu() {
 	isMenuEnabled.value = !isMenuEnabled.value;
 }
 
-
 onMounted(() => {
-  connectWallet();
+  // connectWallet();
 })
 
-const web3 = ref(null);
-const account = ref(null);
-async function connectWallet(){
-	if (window.ethereum) {
-		try {
-			const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-			account.value = accounts[0];
-
-			web3.value = new Web3(window.ethereum);
-
-			console.log(web3.value);
-			console.log(account.value);
-
-		} catch (error) {
-			console.error("Użytkownik odmówił połączenia", error);
-		}
-	} else {
-		alert('Metamask is not available');
-	}
-}
 </script>
 
 <template>
