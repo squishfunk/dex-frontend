@@ -2,9 +2,10 @@
 
 import MenuIcon from "@/components/icons/Menu.vue";
 import CloseIcon from "@/components/icons/Close.vue";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import ThemeSwitch from "@/components/elements/ThemeSwitch.vue";
 import Logo from "@/components/icons/Logo.vue";
+import { useEthereumStore } from "@/stores/ethereum.js";
 
 const isMenuEnabled = ref(false);
 
@@ -12,8 +13,16 @@ function toggleMenu() {
 	isMenuEnabled.value = !isMenuEnabled.value;
 }
 
+const ethereumStore = useEthereumStore();
+
+const connectWallet = async () => {
+  await ethereumStore.connect();
+};
+
+const account = computed(() => ethereumStore.account);
+
 onMounted(() => {
-  // connectWallet();
+  connectWallet();
 })
 
 </script>
@@ -32,10 +41,10 @@ onMounted(() => {
 			</li>
 			<li>
         <template v-if="account">
-          <RouterLink to="/profile">{{ account }}</RouterLink>
+          <RouterLink to="/profile">{{ ethereumStore.walletAddress }}</RouterLink>
         </template>
         <template v-else>
-          <a href="#" @click="connectWallet">{{ account ? account : "Connect metamask" }}</a>
+          <a href="#" @click="connectWallet">Connect metamask</a>
         </template>
       </li>
       <li>
@@ -54,10 +63,10 @@ onMounted(() => {
 			</li>
 			<li class="hideOnMobile">
         <template v-if="account">
-          <RouterLink to="/profile">{{ account }}</RouterLink>
+          <RouterLink to="/profile">{{ ethereumStore.walletAddress }}</RouterLink>
         </template>
         <template v-else>
-          <a href="#" @click="connectWallet">{{ account ? account : "Connect metamask" }}</a>
+          <a href="#" @click="connectWallet">Connect metamask</a>
         </template>
 			</li>
       <li class="hideOnMobile">

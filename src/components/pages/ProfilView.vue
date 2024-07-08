@@ -1,20 +1,29 @@
 <script setup>
-import Close from "@/components/icons/Close.vue";
+import Settings from "@/components/icons/Settings.vue";
 import tokens from "../../assets/cryptocurrencies.json";
+import {useEthereumStore} from "@/stores/ethereum.js";
 
 /* TODO */
-const account = 'asdasdad';
+const ethereumStore = useEthereumStore();
 </script>
 
 <template>
   <div class="card">
     <div class="head">
       <div class="account-info">
-        {{ account }}
+        <img src="https://placehold.co/40x40" alt="">
+        <div class="wallet-address">
+          {{ ethereumStore.walletAddress }}
+
+        </div>
       </div>
       <div class="head-buttons">
-
+        <Settings />
       </div>
+    </div>
+
+    <div class="account-balance">
+      {{ parseFloat(ethereumStore.balance).toFixed(5) }} ETH
     </div>
 
     <div class="token-list">
@@ -32,10 +41,29 @@ const account = 'asdasdad';
 </template>
 
 
-<style>
+<style scoped>
 
 .card {
+  box-sizing: border-box; /* TODO czy to potrzebne? */
+  padding: 20px;
   width: 100%;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.account-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.wallet-address {
+  padding-left: 20px;
 }
 
 </style>
