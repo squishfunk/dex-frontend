@@ -3,7 +3,6 @@ import Settings from "@/components/icons/Settings.vue";
 import tokens from "../../assets/cryptocurrencies.json";
 import {useEthereumStore} from "@/stores/ethereum.js";
 
-/* TODO */
 const ethereumStore = useEthereumStore();
 </script>
 

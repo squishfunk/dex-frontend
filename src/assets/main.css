@@ -42,7 +42,8 @@ html.dark {
 body {
   min-height: 100vh;
   background: var(--main-bg-color);
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-family: "Ubuntu", sans-serif;
+  /*font-family: "Helvetica Neue", Helvetica, sans-serif;*/
   box-sizing: border-box;
 }
 

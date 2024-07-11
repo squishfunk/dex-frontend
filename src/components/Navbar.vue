@@ -2,7 +2,7 @@
 
 import MenuIcon from "@/components/icons/Menu.vue";
 import CloseIcon from "@/components/icons/Close.vue";
-import {computed, onMounted, ref} from "vue";
+import {computed, ref} from "vue";
 import ThemeSwitch from "@/components/elements/ThemeSwitch.vue";
 import Logo from "@/components/icons/Logo.vue";
 import { useEthereumStore } from "@/stores/ethereum.js";
@@ -21,9 +21,9 @@ const connectWallet = async () => {
 
 const account = computed(() => ethereumStore.account);
 
-onMounted(() => {
-  connectWallet();
-})
+// onMounted(() => {
+//   connectWallet();
+// });
 
 </script>
 
