@@ -2,7 +2,7 @@
 
 import MenuIcon from "@/components/icons/Menu.vue";
 import CloseIcon from "@/components/icons/Close.vue";
-import {computed, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import ThemeSwitch from "@/components/elements/ThemeSwitch.vue";
 import Logo from "@/components/icons/Logo.vue";
 import { useEthereumStore } from "@/stores/ethereum.js";
@@ -20,10 +20,6 @@ const connectWallet = async () => {
 };
 
 const account = computed(() => ethereumStore.account);
-
-// onMounted(() => {
-//   connectWallet();
-// });
 
 </script>
 
@@ -95,6 +91,9 @@ const account = computed(() => ethereumStore.account);
 nav {
 	background-color: var(--main-bg-color);
 	box-shadow: 3px 3px 5px rgba(0,0,0,0.1);
+  position: fixed;
+  width: 100%;
+  z-index: 1001;
 }
 
 nav ul{

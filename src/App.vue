@@ -12,8 +12,9 @@ import Navbar from "@/components/Navbar.vue";
 
 <style scoped>
 main {
-  display: grid;
-  place-items: center;
-  min-height: 100vh; /* TODO */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 </style>
