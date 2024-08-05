@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import erc20ABI from "../assets/erc20ABI.json";
+import erc20 from "../assets/ERC20.json";
 
 import Web3 from 'web3';
 
@@ -84,7 +84,7 @@ export const useEthereumStore = defineStore('ethereum', {
         },
         async getTokenBalance(tokenAddress) {
             try {
-                const tokenContract = new this.web3.eth.Contract(erc20ABI, tokenAddress);
+                const tokenContract = new this.web3.eth.Contract(erc20.abi, tokenAddress);
                 const balance = await tokenContract.methods.balanceOf(this.account).call();
                 return this.web3.utils.fromWei(balance, 'ether'); // Assuming the token has 18 decimals
             } catch (error) {

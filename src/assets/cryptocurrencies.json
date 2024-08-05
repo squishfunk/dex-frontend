@@ -8,7 +8,13 @@
   {
     "name": "Wrapped Ethereum",
     "symbol": "wETH",
-    "icon": "https://cryptologos.cc/logos/tether-usdt-logo.png",
+    "icon": "https://cryptologos.cc/logos/steth-steth-logo.png",
     "address": "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14"
+  },
+  {
+    "name": "USD Coin",
+    "symbol": "USDC",
+    "icon": "https://cryptologos.cc/logos/usd-coin-usdc-logo.png",
+    "address": "0xF31B086459C2cdaC006Feedd9080223964a9cDdB"
   }
 ]

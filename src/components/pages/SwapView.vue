@@ -17,14 +17,14 @@ const tokenSelectPopup = ref({
 
 const selectedTokens = ref({
   base: {
-    name: "Tether",
-    symbol: 'USDT',
-    icon: "https://cryptologos.cc/logos/tether-usdt-logo.png",
+    "name": "Ethereum",
+    "symbol": "ETH",
+    "icon": "https://cryptologos.cc/logos/ethereum-eth-logo.png",
   },
   target: {
-    name: "Bitcoin",
-    symbol: 'BTC',
-    icon: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
+    "name": "Wrapped Ethereum",
+    "symbol": "wETH",
+    "icon": "https://cryptologos.cc/logos/steth-steth-logo.png",
   },
 })
 
@@ -40,8 +40,16 @@ const calculateTargetValue = () => {
 
 const selectToken = (token) => {
   if(tokenSelectPopup.value.from === 'base'){
+    /* Jeśli wybieramy ten sam token co w przeciwnym inpucie */
+    if(selectedTokens.value.target.symbol === token.symbol){
+      selectedTokens.value.target = selectedTokens.value.base;
+    }
     selectedTokens.value.base = token;
   }else if(tokenSelectPopup.value.from === 'target'){
+    /* Jeśli wybieramy ten sam token co w przeciwnym inpucie */
+    if(selectedTokens.value.base.symbol === token.symbol){
+      selectedTokens.value.base = selectedTokens.value.target;
+    }
     selectedTokens.value.target = token;
   }
 

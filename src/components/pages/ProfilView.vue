@@ -1,7 +1,7 @@
 <script setup>
 import Settings from "@/components/icons/Settings.vue";
 import tokens from "../../assets/cryptocurrencies.json";
-import erc20ABI from "../../assets/erc20ABI.json";
+import erc20 from "../../assets/ERC20.json";
 import {useEthereumStore} from "@/stores/ethereum.js";
 import {onMounted, ref} from "vue";
 
@@ -23,17 +23,18 @@ const getTokenData = async () => {
     singleToken.balance = 0;
     if(token.address){
       const contract = new ethereumStore.web3.eth.Contract(
-          erc20ABI,
+          erc20.abi,
           token.address
       );
 
       let _balance = await contract.methods.balanceOf(ethereumStore.account).call();
-      _balance = ethereumStore.web3.utils.fromWei(_balance, 'ether');
+      let _decimals = await contract.methods.decimals(ethereumStore.account).call();
 
-      singleToken.balance = _balance;
+      let balance_float = Number(_balance) / Math.pow(10, Number(_decimals));
+      // _balance = ethereumStore.web3.utils.fromWei(_balance, 'ether');
+
+      singleToken.balance = balance_float;
     }else{
-      console.log(ethereumStore.balance);
-
       singleToken.balance = parseFloat(ethereumStore.balance).toFixed(3);
     }
     data.push(singleToken);
