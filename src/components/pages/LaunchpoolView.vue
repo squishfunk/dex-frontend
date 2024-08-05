@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="card">
     <h1>Create ERC20 Token</h1>
     <form @submit.prevent="createToken">
       <div>
@@ -54,5 +54,19 @@
 </script>
 
 <style scoped>
+.card{
+  justify-content: center;
+  border-radius: var(--input-border-radius);
+  width: 75%;
+  padding: 30px;
+}
 
+.card button {
+  background-color: var(--main-contrast-color);
+  border-radius: var(--input-border-radius);
+  color: var(--main-contrast-color-text);
+  height: 5rem;
+  font-weight: 500;
+  font-size: 1rem;
+}
 </style>
