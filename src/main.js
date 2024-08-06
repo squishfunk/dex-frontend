@@ -4,14 +4,12 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { createRouter, createMemoryHistory } from 'vue-router'
 import SwapView from "@/components/pages/SwapView.vue";
-import LaunchpoolView from "@/components/pages/LaunchpoolView.vue";
-import ProfilView from "@/components/pages/ProfilView.vue";
 import { createPinia } from "pinia";
 
 const routes = [
     { path: '/', component: SwapView },
-    { path: '/launchpools', component: LaunchpoolView },
-    { path: '/profile', component: ProfilView },
+    { path: '/token/mint', component: () => import('@/components/pages/TokenMinterView.vue') },
+    { path: '/profile', component: () => import('@/components/pages/ProfilView.vue') },
 ]
 
 const router = createRouter({

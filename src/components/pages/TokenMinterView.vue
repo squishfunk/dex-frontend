@@ -2,16 +2,16 @@
   <div class="card">
     <h1>Create ERC20 Token</h1>
     <form @submit.prevent="createToken">
-      <div>
-        <label for="name">Token Name:</label>
+      <div class="form-input">
+        <label for="name">Token Name</label>
         <input type="text" v-model="tokenName" required />
       </div>
-      <div>
-        <label for="symbol">Token Symbol:</label>
+      <div class="form-input">
+        <label for="symbol">Token Symbol</label>
         <input type="text" v-model="tokenSymbol" required />
       </div>
-      <div>
-        <label for="supply">Initial Supply:</label>
+      <div class="form-input">
+        <label for="supply">Initial Supply</label>
         <input type="number" v-model="tokenSupply" required />
       </div>
       <button type="submit">Create Token</button>
@@ -28,7 +28,7 @@
 
   const tokenName = ref('');
   const tokenSymbol = ref('');
-  const tokenSupply = ref(0);
+  const tokenSupply = ref(21000000);
   const web3 = ethereumStore.web3;
 
   const createToken = async () => {
@@ -54,19 +54,57 @@
 </script>
 
 <style scoped>
-.card{
-  justify-content: center;
+.card {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   border-radius: var(--input-border-radius);
-  width: 75%;
-  padding: 30px;
+  width: 100%;
+  padding: 20px;
 }
 
-.card button {
+h1 {
+  margin-bottom: 30px;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 400px;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input label {
+  margin: 10px;
+}
+
+input {
+  box-sizing: border-box;
+  font-size:2rem;
+  background: transparent;
+  width: 100%;
+  border: 1px var(--main-bg-color-hover) solid;
+  border-radius: var(--input-border-radius);
+  outline: none;
+  padding: 10px 10px;
+}
+
+input:focus {
+  border: 1px var(--main-color) solid;
+}
+
+button {
   background-color: var(--main-contrast-color);
   border-radius: var(--input-border-radius);
   color: var(--main-contrast-color-text);
   height: 5rem;
-  font-weight: 500;
-  font-size: 1rem;
+  border: none;
 }
 </style>

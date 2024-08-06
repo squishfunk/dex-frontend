@@ -1,9 +1,13 @@
 <script setup>
-import {ref} from "vue";
-import Popup from "@/components/CurrencyPopup.vue";
+import {defineAsyncComponent, ref} from "vue";
+// import Popup from "@/components/CurrencyPopup.vue";
 import tokens from "../../assets/cryptocurrencies.json";
 import Dropdown from "@/components/icons/Dropdown.vue";
 import Change from "@/components/icons/Change.vue";
+
+const Popup = defineAsyncComponent(() =>
+    import('@/components/CurrencyPopup.vue')
+)
 
 
 const baseValue = ref(0);
@@ -105,10 +109,11 @@ const changeSideSwap = () => {
 <style scoped>
 
 .card{
-  /*background: var(--main-bg-color);*/
   justify-content: center;
+  align-items: center;
+  /*background: var(--main-bg-color);*/
   border-radius: var(--input-border-radius);
-  width: 75%;
+  width: 100%;
   display: grid;
   gap: 30px;
   position: relative;
@@ -198,7 +203,6 @@ button {
   border-radius: var(--input-border-radius);
   color: var(--main-contrast-color-text);
   height: 5rem;
-  font-weight: 500;
 }
 
 </style>

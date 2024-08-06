@@ -6,8 +6,8 @@ const props = defineProps(['TogglePopup', 'tokens'])
 </script>
 
 <template>
-  <div class="popup">
-    <div class="popup-inner">
+  <div class="popup" @click="TogglePopup()">
+    <div class="popup-inner" @click.stop="">
       <div class="top-popup">
         Wybierz Token
         <Close class="popup-close" @click="TogglePopup()" />
@@ -36,7 +36,7 @@ const props = defineProps(['TogglePopup', 'tokens'])
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1000;
+  z-index: 1001;
   background-color: rgba(0,0,0,0.5);
 
   display: flex;
@@ -85,6 +85,10 @@ const props = defineProps(['TogglePopup', 'tokens'])
 .token-row img {
   width: 40px;
   background: transparent;
+}
+
+.popup-close {
+  cursor: pointer;
 }
 
 .v-enter-active {

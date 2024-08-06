@@ -2,7 +2,7 @@
 
 import MenuIcon from "@/components/icons/Menu.vue";
 import CloseIcon from "@/components/icons/Close.vue";
-import {computed, onMounted, ref} from "vue";
+import {computed, ref} from "vue";
 import ThemeSwitch from "@/components/elements/ThemeSwitch.vue";
 import Logo from "@/components/icons/Logo.vue";
 import { useEthereumStore } from "@/stores/ethereum.js";
@@ -33,7 +33,7 @@ const account = computed(() => ethereumStore.account);
         <RouterLink to="/">Swap</RouterLink>
 			</li>
 			<li>
-        <RouterLink to="/launchpools">Launchpool</RouterLink>
+        <RouterLink to="/token/mint">Token minter</RouterLink>
 			</li>
 			<li>
         <template v-if="account">
@@ -55,7 +55,7 @@ const account = computed(() => ethereumStore.account);
 				<RouterLink to="/">Swap</RouterLink>
 			</li>
 			<li class="hideOnMobile">
-				<RouterLink to="/launchpools">Launchpool</RouterLink>
+        <RouterLink to="/token/mint">Token minter</RouterLink>
 			</li>
 			<li class="hideOnMobile">
         <template v-if="account">
@@ -94,9 +94,12 @@ nav {
   position: fixed;
   width: 100%;
   z-index: 1001;
+  display: flex;
+  justify-content: center;
 }
 
 nav ul{
+  max-width: 1000px;
 	width: 100%;
 	list-style: none;
 	display: flex;
