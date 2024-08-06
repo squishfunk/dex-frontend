@@ -65,8 +65,14 @@ const props = defineProps(['TogglePopup', 'tokens'])
 }
 
 .token-list {
-  overflow: scroll;
+  overflow-y: scroll;
   width: 100%;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.token-list::-webkit-scrollbar {
+  display: none;
 }
 
 .token-row {
