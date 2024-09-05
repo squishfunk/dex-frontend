@@ -1,29 +1,48 @@
 <script setup>
+import axios from 'axios';
 import { ref } from 'vue';
 import {useEthereumStore} from "@/stores/ethereum.js";
 import tokenContract from "../../assets/ERC20.json";
 
 const ethereumStore = useEthereumStore();
 
-const tokenName = ref('');
-const tokenLogoUrl = ref('');
-const tokenSymbol = ref('');
-const tokenSupply = ref(21000000);
-const tokenDescription = ref('');
+const token = ref({
+  name: null,
+  logoURL: null,
+  symbol: null,
+  supply: 21000000,
+  description: null
+});
 const web3 = ethereumStore.web3;
 
 const createToken = async () => {
   const accounts = await web3.eth.getAccounts();
-
   const contract = new web3.eth.Contract(tokenContract.abi);
 
   contract
       .deploy({
         data: tokenContract.bytecode,
-        arguments: [tokenName.value, tokenSymbol.value, tokenSupply.value],
+        arguments: [token.value.name, token.value.symbol, token.value.supply],
       })
       .send({ from: accounts[0] })
       .on('receipt', (receipt) => {
+        const tokenData = {
+          name: token.value.name,
+          symbol: token.value.symbol,
+          supply: token.value.supply,
+          logoURL: token.value.logoURL,
+          description: token.value.description,
+          contractAddress: receipt.contractAddress,
+          deployerAddress: accounts[0]
+        };
+
+
+        axios.post(
+            'http://127.0.0.1:8000/api/tokens',
+            tokenData
+        ).then((response) => console.log(response))
+            .catch(e => console.log(e));
+
         console.log('Contract deployed at address:', receipt.contractAddress);
       })
       .on('error', (error) => {
@@ -40,26 +59,26 @@ const createToken = async () => {
       <div class="form-input">
         <label for="name">Token Name</label>
         <small>Your project name with spaces (usually 1-3 words)</small>
-        <input placeholder="My token" type="text" v-model="tokenName" required />
+        <input placeholder="My token" type="text" v-model="token.name" required />
       </div>
       <div class="form-input">
         <label for="symbol">Token Symbol</label>
         <small>Ticker trading symbol (usually 3-5 letters)</small>
-        <input placeholder="MYTKN" type="text" v-model="tokenSymbol" required />
+        <input placeholder="MYTKN" type="text" v-model="token.symbol" required />
       </div>
       <div class="form-input">
         <label for="symbol">Logo URL</label>
         <small>URL of 256x256 pixel PNG image of token logo with transparent background.</small>
-        <input placeholder="https://..." type="text" v-model="tokenLogoUrl" required />
+        <input placeholder="https://..." type="text" v-model="token.logoURL"/>
       </div>
       <div class="form-input">
         <label for="supply">Initial Supply</label>
         <small>Number of initial tokens to mint </small>
-        <input type="number" v-model="tokenSupply" required />
+        <input type="number" v-model="token.supply" required />
       </div>
       <div class="form-input">
         <label for="description">Description</label>
-        <textarea placeholder="About our token" v-model="tokenDescription" required />
+        <textarea placeholder="About our token" v-model="token.description" />
       </div>
 
       <button type="submit">Create Token</button>

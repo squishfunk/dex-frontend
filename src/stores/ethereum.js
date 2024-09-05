@@ -50,7 +50,7 @@ export const useEthereumStore = defineStore('ethereum', {
             try {
                 await window.ethereum.request({
                     method: 'wallet_switchEthereumChain',
-                    params: [{ chainId: '0xaa36a7' }], // Sepolia test network chainId in hexadecimal
+                    params: [{ chainId: '0xaa36a7' }],
                 });
             } catch (switchError) {
                 // This error code indicates that the chain has not been added to MetaMask

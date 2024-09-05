@@ -31,7 +31,6 @@ const getTokenData = async () => {
       let _decimals = await contract.methods.decimals(ethereumStore.account).call();
 
       let balance_float = Number(_balance) / Math.pow(10, Number(_decimals));
-      // _balance = ethereumStore.web3.utils.fromWei(_balance, 'ether');
 
       singleToken.balance = balance_float;
     }else{
