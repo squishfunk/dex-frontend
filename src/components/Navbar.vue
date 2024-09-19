@@ -35,6 +35,9 @@ const account = computed(() => ethereumStore.account);
 			<li>
         <RouterLink to="/token/mint">Token minter</RouterLink>
 			</li>
+      <li>
+        <RouterLink to="/token/launchpad">Launchpad</RouterLink>
+      </li>
 			<li>
         <template v-if="account">
           <RouterLink to="/profile">{{ ethereumStore.walletAddress }}</RouterLink>
