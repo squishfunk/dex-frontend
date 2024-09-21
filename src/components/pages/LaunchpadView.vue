@@ -47,7 +47,7 @@ const getTokenInfo = async (e) => {
     <form>
       <div class="form-input">
         <label for="name">Token Contract Address</label>
-        <input placeholder="My token" type="text" required @input="getTokenInfo" />
+        <input placeholder="0x..." type="text" required @input="getTokenInfo" />
         <table v-if="!token.isLoading && token.name">
           <tr>
             <td>
@@ -77,7 +77,7 @@ const getTokenInfo = async (e) => {
       </div>
 
 
-      <button type="submit">Create Token</button>
+      <button type="submit" v-if="!token.isLoading && token.name">Next step</button>
     </form>
   </div>
 </template>
