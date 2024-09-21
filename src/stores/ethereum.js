@@ -2,6 +2,8 @@ import { defineStore } from 'pinia';
 import erc20 from "../assets/ERC20.json";
 
 import Web3 from 'web3';
+import {onMounted} from "vue";
+import {toast} from "vue3-toastify";
 
 export const useEthereumStore = defineStore('ethereum', {
     state: () => ({
@@ -28,8 +30,7 @@ export const useEthereumStore = defineStore('ethereum', {
                     this.networkId = networkId;
 
                     if (networkId !== 11155111n) {
-                        console.error("Please connect to the Rinkeby test network.");
-                        console.error(networkId);
+                        toast("Please connect to the Rinkeby test network." , {type: "error"});
                         return;
                     }
 
@@ -39,10 +40,10 @@ export const useEthereumStore = defineStore('ethereum', {
                     const balance = await this.web3.eth.getBalance(this.account);
                     this.balance = this.web3.utils.fromWei(balance, 'ether');
                 } else {
-                    console.error("No Ethereum provider found. Install MetaMask.");
+                    toast("No Ethereum provider found. Install MetaMask." , {type: "error"});
                 }
             } catch (error) {
-                console.error("Error connecting to Ethereum provider:", error);
+                toast("Error connecting to Ethereum provider: " + error.message , {type: "error"});
             }
         },
         // Private method to switch to the Sepolia test network
@@ -73,11 +74,11 @@ export const useEthereumStore = defineStore('ethereum', {
                             ],
                         });
                     } catch (addError) {
-                        console.error("Failed to add the Sepolia network to MetaMask:", addError);
+                        toast("Failed to add the Sepolia network to MetaMask: " + addError.message , {type: "error"});
                         throw addError;
                     }
                 } else {
-                    console.error("Failed to switch to the Sepolia network:", switchError);
+                    toast("Failed to switch to the Sepolia network: " + switchError.message , {type: "error"});
                     throw switchError;
                 }
             }

@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import {useEthereumStore} from "@/stores/ethereum.js";
 import erc20 from "@/assets/ERC20.json";
+import {toast} from "vue3-toastify";
+import {useDebounceFn} from "@vueuse/core";
 
 const ethereumStore = useEthereumStore();
 
@@ -12,7 +14,7 @@ const token = ref({
   isLoading: false
 });
 
-const getTokenInfo = async (e) => {
+const getTokenInfo = useDebounceFn(async (e) => {
   token.value.isLoading = true;
 
   try{
@@ -24,6 +26,7 @@ const getTokenInfo = async (e) => {
     token.value.symbol = await contract.methods.symbol().call();
     token.value.decimals = await contract.methods.decimals().call();
   }catch (e){
+    toast("Token has not been found", {type: "error"})
     token.value = {
       name: null,
       symbol: null,
@@ -36,7 +39,7 @@ const getTokenInfo = async (e) => {
 
 
   /* 0xd62F783B767287A3A37FeBC9dADe7525b819138a */
-}
+}, 500);
 
 
 </script>

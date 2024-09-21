@@ -1,10 +1,12 @@
 import './assets/main.css'
 
-import { createApp } from 'vue'
-import App from './App.vue'
-import { createRouter, createMemoryHistory } from 'vue-router'
+import { createApp } from 'vue';
+import App from './App.vue';
+import { createRouter, createMemoryHistory } from 'vue-router';
 import SwapView from "@/components/pages/SwapView.vue";
 import { createPinia } from "pinia";
+import Vue3Toastify from 'vue3-toastify';
+
 
 const routes = [
     { path: '/', component: SwapView },
@@ -21,6 +23,13 @@ const router = createRouter({
 const pinia = createPinia();
 
 const app = createApp(App)
+
+
+app.use(Vue3Toastify, {
+    autoClose: 3000,
+    position: "bottom-left",
+    hideProgressBar: true,
+});
 
 app.use(pinia);
 app.use(router);
