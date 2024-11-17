@@ -29,11 +29,6 @@ const submitForm = () => {
 
 <template>
     <div class="form">
-
-
-
-
-
       <div v-if="currentStep === 1">
         <Step1 :token="token" />
       </div>

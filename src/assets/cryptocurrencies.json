@@ -15,6 +15,12 @@
     "name": "USD Coin",
     "symbol": "USDC",
     "icon": "https://cryptologos.cc/logos/usd-coin-usdc-logo.png",
-    "address": "0xF31B086459C2cdaC006Feedd9080223964a9cDdB"
+    "address": "0x9cbbe4F3F9DCfc8b9aAE92359d8c108Bfd2e5929"
+  },
+  {
+    "name": "USDT",
+    "symbol": "USDT",
+    "icon": "https://cryptologos.cc/logos/tether-usdt-logo.png",
+    "address": "0x0A9BaEae011bC2a7b3B95F1CFe91b0658A77f436"
   }
 ]

@@ -68,16 +68,16 @@ onMounted(async () => {
     </div>
 
     <div class="token-list">
-      <div class="token-row" v-if="tokens_list" v-for="token in tokens_list" @click="$emit('select-token', token)">
-        <img :src="token.icon" alt="icon">
-        <div class="token-info" >
-          <div class="token-name">{{ token.name }}</div>
-          <div class="token-symbol">{{ parseFloat(token.balance).toFixed(3) }} {{ token.symbol}}</div>
-        </div>
-      </div>
-      <div v-else>
-        loading
-      </div>
+<!--      <div class="token-row" v-if="tokens_list" v-for="token in tokens_list" @click="$emit('select-token', token)">-->
+<!--        <img :src="token.icon" alt="icon">-->
+<!--        <div class="token-info" >-->
+<!--          <div class="token-name">{{ token.name }}</div>-->
+<!--          <div class="token-symbol">{{ parseFloat(token.balance).toFixed(3) }} {{ token.symbol}}</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div v-else>-->
+<!--        loading-->
+<!--      </div>-->
     </div>
 
   </div>
@@ -87,9 +87,13 @@ onMounted(async () => {
 <style scoped>
 
 .card {
-  box-sizing: border-box; /* TODO czy to potrzebne? */
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: var(--input-border-radius);
+  width: 60%;
   padding: 20px;
-  width: 100%;
 }
 
 .head {
