@@ -1,7 +1,7 @@
 <script setup>
 import Settings from "@/components/icons/Settings.vue";
 import tokens from "../../assets/cryptocurrencies.json";
-import erc20 from "../../assets/ERC20.json";
+import erc20 from "../../assets/abi/ERC20.json";
 import {useEthereumStore} from "@/stores/ethereum.js";
 import {onMounted, ref} from "vue";
 

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import erc20 from "../assets/ERC20.json";
+import erc20 from "../assets/abi/ERC20.json";
 
 import Web3 from 'web3';
 import {onMounted} from "vue";

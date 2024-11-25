@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { ref } from 'vue';
 import {useEthereumStore} from "@/stores/ethereum.js";
-import tokenContract from "../../assets/ERC20.json";
+import tokenContract from "../../assets/abi/ERC20.json";
 
 const ethereumStore = useEthereumStore();
 

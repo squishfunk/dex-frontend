@@ -4,7 +4,7 @@ import {useDebounceFn} from "@vueuse/core";
 
 const { token } = defineProps({token: Object})
 
-import erc20 from "@/assets/ERC20.json";
+import erc20 from "@/assets/abi/ERC20.json";
 import {useEthereumStore} from "@/stores/ethereum.js";
 
 const ethereumStore = useEthereumStore();
