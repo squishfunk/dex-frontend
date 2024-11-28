@@ -30,7 +30,7 @@ const account = computed(() => ethereumStore.account);
 				<a href="#" @click="toggleMenu"><CloseIcon/></a>
 			</li>
 			<li>
-        <RouterLink to="/">Swap</RouterLink>
+        <RouterLink to="/swap">Swap</RouterLink>
 			</li>
 			<li>
         <RouterLink to="/token/mint">Token minter</RouterLink>

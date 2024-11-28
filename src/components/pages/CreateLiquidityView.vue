@@ -46,14 +46,14 @@ const handleAddLiquidity = async () => {
 
     await routerContract.methods
         .addLiquidity(
-            tokenA.value, // Adres tokenu A
-            tokenB.value, // Adres tokenu B
-            amountAInWei, // Ilość tokenu A
-            amountBInWei, // Ilość tokenu B
-            0, // Minimalna ilość tokenu A
-            0, // Minimalna ilość tokenu B
-            account, // Adres użytkownika
-            deadline // Czas wygaśnięcia transakcji
+            tokenA.value,
+            tokenB.value,
+            amountAInWei,
+            amountBInWei,
+            0,
+            0,
+            account,
+            deadline
         )
         .send({ from: account });
 

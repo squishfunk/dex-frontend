@@ -4,11 +4,18 @@ import {defineAsyncComponent, ref} from "vue";
 import tokens from "../../assets/cryptocurrencies.json";
 import Dropdown from "@/components/icons/Dropdown.vue";
 import Change from "@/components/icons/Change.vue";
+import routerAbi from "@/assets/abi/UniswapV2Router02.json";
+import { useEthereumStore } from "@/stores/ethereum.js";
+import { ethers } from "ethers";
+import {toast} from "vue3-toastify";
+
+const ethereumStore = useEthereumStore();
+const web3 = ethereumStore.web3;
+const routerAddress = "0xbcCB80D3953AEd07bcd7A74135fF83E7af8BF9F5"; // Adres Uniswap Router
 
 const Popup = defineAsyncComponent(() =>
     import('@/components/CurrencyPopup.vue')
 )
-
 
 const baseValue = ref(0);
 const targetValue = ref(0);
@@ -37,7 +44,7 @@ const TogglePopup = (from) => {
   tokenSelectPopup.value.from = from;
 }
 
-const calculateTargetValue = () => {
+const calculateTargetValue = async () => {
    /* TODO */
 	targetValue.value = baseValue.value * rate.value;
 };
@@ -63,6 +70,38 @@ const selectToken = (token) => {
 const changeSideSwap = () => {
   [selectedTokens.value.base, selectedTokens.value.target] = [selectedTokens.value.target, selectedTokens.value.base];
 }
+
+const performSwap = async () => {
+  try {
+    const routerContract = new web3.eth.Contract(routerAbi, routerAddress);
+    const amountIn = ethers.parseUnits(baseValue.value.toString(), 18); // Kwota wejściowa w wei
+    /* TODO zmień */
+    const path = [
+      "0x4d3ae197938004dc96ed640e54f726f1615bfc86",
+      "0x81A5F578c184D4Eb33db206d3Ee949DcD10F3C3F",
+    ];
+    const to = await ethereumStore.account;
+    const deadline = Math.floor(Date.now() / 1000) + 60 * 20; // 20 minut od teraz
+
+    const amountsOut = await routerContract.methods.getAmountsOut(amountIn, path).call();
+    const amountOut = BigInt(amountsOut[1]);
+    const amountOutMin = amountOut - (amountOut * BigInt(5)) / BigInt(100); // Obliczenie minimalnej kwoty z 5% poślizgu
+
+    const tx = await routerContract.methods.swapExactTokensForTokens(
+        amountIn,
+        amountOutMin,
+        path,
+        to,
+        deadline
+    ).send({ from: to });
+
+    console.log("Wymiana zakończona!", tx);
+  } catch (error) {
+    console.log(error);
+    toast("Error during swap: " + error.message, {type: "error"})
+  }
+};
+
 
 </script>
 
@@ -95,7 +134,7 @@ const changeSideSwap = () => {
           </button>
         </div>
       </div>
-      <button class="swap-btn">
+      <button class="swap-btn" @click="performSwap">
         Zamień
       </button>
     </div>
