@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ref } from 'vue';
 import {useEthereumStore} from "@/stores/ethereum.js";
 import tokenContract from "../../assets/abi/ERC20.json";
+import {toast} from "vue3-toastify";
 
 const ethereumStore = useEthereumStore();
 
@@ -43,10 +44,10 @@ const createToken = async () => {
         ).then((response) => console.log(response))
             .catch(e => console.log(e));
 
-        console.log('Contract deployed at address:', receipt.contractAddress);
+        toast("Contract deployed at address: "+ receipt.contractAddress, {type: "success"})
       })
       .on('error', (error) => {
-        console.error('Error deploying contract:', error);
+        toast("Error deploying contract: "+ error, {type: "error"})
       });
 };
 

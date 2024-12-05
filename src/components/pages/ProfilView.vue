@@ -1,38 +1,52 @@
 <script setup>
 import Settings from "@/components/icons/Settings.vue";
-import tokens from "../../assets/cryptocurrencies.json";
+// import tokens from "../../assets/cryptocurrencies.json";
 import erc20 from "../../assets/abi/ERC20.json";
 import {useEthereumStore} from "@/stores/ethereum.js";
 import {onMounted, ref} from "vue";
+import axios from "axios";
 
 const ethereumStore = useEthereumStore();
 
 const tokens_list = ref([]);
 
+const API_URL = "http://localhost:8000/api/tokens";
+
 const getTokenData = async () => {
 
   let data = [];
+
+  const response = await axios.get(API_URL);
+  const tokens = response.data;
+
+  console.log(tokens);
+
   for (const token of tokens){
     let singleToken = [];
     singleToken = {
       "name": token.name,
       "symbol": token.symbol,
-      "icon": token.icon,
+      "icon": token.logoURL,
       "address": token.address
     }
     singleToken.balance = 0;
-    if(token.address){
-      const contract = new ethereumStore.web3.eth.Contract(
-          erc20.abi,
-          token.address
-      );
+    if(token.contractAddress){
+      try{
+        const contract = new ethereumStore.web3.eth.Contract(
+            erc20.abi,
+            token.contractAddress
+        );
 
-      let _balance = await contract.methods.balanceOf(ethereumStore.account).call();
-      let _decimals = await contract.methods.decimals(ethereumStore.account).call();
+        let _balance = await contract.methods.balanceOf(ethereumStore.account).call();
+        let _decimals = await contract.methods.decimals(ethereumStore.account).call();
 
-      let balance_float = Number(_balance) / Math.pow(10, Number(_decimals));
+        let balance_float = Number(_balance) / Math.pow(10, Number(_decimals));
+        singleToken.balance = balance_float;
 
-      singleToken.balance = balance_float;
+      }catch (e){
+        console.error(e);
+      }
+
     }else{
       singleToken.balance = parseFloat(ethereumStore.balance).toFixed(3);
     }
@@ -50,12 +64,16 @@ onMounted(async () => {
 
 <template>
   <div class="card">
-    <div class="head">
+    <div class="card-head">
       <div class="account-info">
         <img src="https://placehold.co/40x40" alt="">
-        <div class="wallet-address">
-          {{ ethereumStore.walletAddress }}
-
+        <div class="wallet-info">
+          <div class="wallet-address">
+            {{ ethereumStore.walletAddress }}
+          </div>
+          <small class="account-balance">
+            {{ parseFloat(ethereumStore.balance).toFixed(3) }} ETH
+          </small>
         </div>
       </div>
       <div class="head-buttons">
@@ -63,21 +81,21 @@ onMounted(async () => {
       </div>
     </div>
 
-    <div class="account-balance">
-      {{ parseFloat(ethereumStore.balance).toFixed(3) }} ETH
-    </div>
+    <hr>
 
-    <div class="token-list">
-<!--      <div class="token-row" v-if="tokens_list" v-for="token in tokens_list" @click="$emit('select-token', token)">-->
-<!--        <img :src="token.icon" alt="icon">-->
-<!--        <div class="token-info" >-->
-<!--          <div class="token-name">{{ token.name }}</div>-->
-<!--          <div class="token-symbol">{{ parseFloat(token.balance).toFixed(3) }} {{ token.symbol}}</div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div v-else>-->
-<!--        loading-->
-<!--      </div>-->
+    <div class="card-body">
+      <div class="token-list">
+        <div class="token-row" v-if="tokens_list" v-for="token in tokens_list" @click="$emit('select-token', token)">
+          <img :src="token.icon" alt="icon" width="40px">
+          <div class="token-info" >
+            <div class="token-name">{{ token.name }}</div>
+            <div class="token-symbol">{{ token.balance }} {{ token.symbol}}</div>
+          </div>
+        </div>
+        <div v-else>
+          loading
+        </div>
+      </div>
     </div>
 
   </div>
@@ -87,21 +105,32 @@ onMounted(async () => {
 <style scoped>
 
 .card {
-  margin-top: 100px;
+  margin: 50px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: var(--input-border-radius);
-  width: 60%;
+  width: 90%;
   padding: 20px;
 }
 
-.head {
+hr {
+  align-self: stretch;
+  margin: 10px 0 10px 0;
+}
+
+.card-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 40px;
+}
+
+.card-body {
+  padding: 10px;
+  width: 100%;
+  background-color: var(--main-second-bg-color);
+  border-radius: var(--input-border-radius);
 }
 
 .account-info {
@@ -109,8 +138,21 @@ onMounted(async () => {
   align-items: center;
   justify-content: space-between;
 }
-.wallet-address {
+
+.wallet-info {
   padding-left: 20px;
+
+}
+.token-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.token-row{
+  display: flex;
+  gap: 10px;
 }
 
 </style>
