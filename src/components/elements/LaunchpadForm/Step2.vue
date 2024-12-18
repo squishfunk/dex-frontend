@@ -1,73 +1,121 @@
 <script setup>
 import {toast} from "vue3-toastify";
 import {useDebounceFn} from "@vueuse/core";
-import { ref } from 'vue';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
 
 const { token } = defineProps({token: Object})
 
 import erc20 from "@/assets/abi/ERC20.json";
 import {useEthereumStore} from "@/stores/ethereum.js";
+import {ref} from "vue";
 
 const ethereumStore = useEthereumStore();
+const tokenAddress = ref("");
+const rate = ref(0);
+const wallet = ref("");
+const openingTime = ref("");
+const closingTime = ref("");
+const deploymentResult = ref("");
 
-const getTokenInfo = useDebounceFn(async (e) => {
-  console.log(token.isLoading);
-  token.isLoading = true;
 
-  try{
-    const contract = new ethereumStore.web3.eth.Contract(
-        erc20.abi,
-        e.target.value
-    );
-    token.name = await contract.methods.name().call();
-    token.symbol = await contract.methods.symbol().call();
-    token.decimals = await contract.methods.decimals().call();
-  }catch (e){
-    toast("Token has not been found", {type: "error"})
-    token.name = null;
-    token.symbol = null;
-    token.decimals = 21000000;
-    token.isLoading = false;
+const deployCrowdsale = async () => {
+  try {
+    const web3 = new Web3(window.ethereum);
+    await window.ethereum.request({ method: "eth_requestAccounts" });
+
+    const accounts = await web3.eth.getAccounts();
+    const fromAccount = accounts[0];
+
+    // Kontrakt TimedCrowdsale ABI i bytecode
+    const timedCrowdsaleABI = [/* ABI kontraktu TimedCrowdsale */];
+    const timedCrowdsaleBytecode = "0x..."; // Bytecode kontraktu TimedCrowdsale
+
+    const crowdsaleContract = new web3.eth.Contract(timedCrowdsaleABI);
+
+    // Konwersja dat na timestamp
+    const openingTimestamp = new Date(openingTime.value).getTime() / 1000;
+    const closingTimestamp = new Date(closingTime.value).getTime() / 1000;
+
+    // Parametry kontraktu
+    const constructorArgs = [
+      rate.value,          // rate: tokens per ETH
+      wallet.value,        // wallet address
+      tokenAddress.value,  // token address
+      openingTimestamp,    // opening time
+      closingTimestamp,    // closing time
+    ];
+
+    // Wysłanie transakcji do blockchain
+    const deployedContract = await crowdsaleContract
+        .deploy({
+          data: timedCrowdsaleBytecode,
+          arguments: constructorArgs,
+        })
+        .send({ from: fromAccount });
+
+    // Zapisanie adresu nowego kontraktu
+    deploymentResult.value = deployedContract.options.address;
+  } catch (error) {
+    console.error("Deployment error:", error);
   }
+};
 
-  token.isLoading = false;
-
-
-  /* 0xd62F783B767287A3A37FeBC9dADe7525b819138a */
-}, 500);
+const setDefaultWallet = (e) => {
+  e.preventDefault;
+  wallet.value = ethereumStore.account;
+}
 
 </script>
 
 <template>
   <div class="form-input">
-    <label for="name">Token Contract Address</label>
-    <input placeholder="0x..." type="text" required @input="getTokenInfo" />
-    <table v-if="!token.isLoading && token.name">
-      <tr>
-        <td>
-          Token name
-        </td>
-        <td>
-          {{ token.name }}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Token symbol
-        </td>
-        <td>
-          {{ token.symbol }}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Decimals
-        </td>
-        <td>
-          {{ token.decimals }}
-        </td>
-      </tr>
-    </table>
+    <form @submit.prevent="deployCrowdsale">
+      <div class="form-group">
+        <label for="rate">Rate (tokens per ETH)</label>
+        <input
+            id="rate"
+            v-model.number="rate"
+            type="number"
+            placeholder="Enter rate"
+            required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="wallet">Wallet Address</label>
+        <input
+            id="wallet"
+            v-model="wallet"
+            type="text"
+            placeholder="Enter wallet address"
+            required
+        />
+        <a @click="setDefaultWallet" href="#">Set my wallet address</a>
+      </div>
+
+      <div class="form-group">
+        <label for="openingTime">Opening Time (UTC)</label>
+        <input
+            id="openingTime"
+            v-model="openingTime"
+            type="datetime-local"
+            required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="closingTime">Closing Time (UTC)</label>
+        <input
+            id="closingTime"
+            v-model="closingTime"
+            type="datetime-local"
+            required
+        />
+      </div>
+
+      <button type="submit">Deploy Crowdsale Contract</button>
+    </form>
   </div>
 </template>
 
@@ -109,5 +157,15 @@ const getTokenInfo = useDebounceFn(async (e) => {
 
 input:focus {
   border: 1px var(--main-color) solid;
+}
+
+.form-group {
+  margin: 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 </style>
