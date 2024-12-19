@@ -9,9 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@openzeppelin/contracts": "^5.1.0",
     "@vuepic/vue-datepicker": "^10.0.0",
     "@vueuse/core": "^10.11.0",
     "axios": "^1.7.3",
+    "dotenv": "^16.4.7",
     "ethers": "^6.13.4",
     "lodash": "^4.17.21",
     "pinia": "^2.1.7",
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
+    "hardhat": "^2.22.17",
     "vite": "^5.3.1"
   }
 }

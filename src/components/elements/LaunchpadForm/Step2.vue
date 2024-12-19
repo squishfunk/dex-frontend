@@ -4,6 +4,8 @@ import {useDebounceFn} from "@vueuse/core";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
+import crowdsaleContractArtifact from "../../../../artifacts/contracts/Crowdsale.sol/Crowdsale.json";
+
 const { token } = defineProps({token: Object})
 
 import erc20 from "@/assets/abi/ERC20.json";
@@ -21,17 +23,16 @@ const deploymentResult = ref("");
 
 const deployCrowdsale = async () => {
   try {
-    const web3 = new Web3(window.ethereum);
-    await window.ethereum.request({ method: "eth_requestAccounts" });
 
+    const web3 = ethereumStore.web3;
     const accounts = await web3.eth.getAccounts();
+
     const fromAccount = accounts[0];
 
-    // Kontrakt TimedCrowdsale ABI i bytecode
-    const timedCrowdsaleABI = [/* ABI kontraktu TimedCrowdsale */];
-    const timedCrowdsaleBytecode = "0x..."; // Bytecode kontraktu TimedCrowdsale
+    // Kontrakt Crowdsale ABI i bytecode
+    const timedCrowdsaleBytecode = crowdsaleContractArtifact.bytecode;
 
-    const crowdsaleContract = new web3.eth.Contract(timedCrowdsaleABI);
+    const crowdsaleContract = new web3.eth.Contract([crowdsaleContractArtifact.abi]);
 
     // Konwersja dat na timestamp
     const openingTimestamp = new Date(openingTime.value).getTime() / 1000;
@@ -41,9 +42,7 @@ const deployCrowdsale = async () => {
     const constructorArgs = [
       rate.value,          // rate: tokens per ETH
       wallet.value,        // wallet address
-      tokenAddress.value,  // token address
-      openingTimestamp,    // opening time
-      closingTimestamp,    // closing time
+      tokenAddress.value  // token address
     ];
 
     // Wysłanie transakcji do blockchain
@@ -55,6 +54,7 @@ const deployCrowdsale = async () => {
         .send({ from: fromAccount });
 
     // Zapisanie adresu nowego kontraktu
+    console.log(deployedContract.options.address);
     deploymentResult.value = deployedContract.options.address;
   } catch (error) {
     console.error("Deployment error:", error);

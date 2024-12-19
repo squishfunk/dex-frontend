@@ -22,6 +22,7 @@ const getTokenInfo = useDebounceFn(async (e) => {
     token.symbol = await contract.methods.symbol().call();
     token.decimals = await contract.methods.decimals().call();
   }catch (e){
+    console.log(e);
     toast("Token has not been found", {type: "error"})
     token.name = null;
     token.symbol = null;

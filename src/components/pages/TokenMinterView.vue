@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { ref } from 'vue';
 import {useEthereumStore} from "@/stores/ethereum.js";
-import tokenContract from "../../assets/abi/ERC20.json";
+import tokenContract from "../../../artifacts/contracts/NewERC20.sol/NewERC20.json";
 import {toast} from "vue3-toastify";
 
 const ethereumStore = useEthereumStore();
@@ -23,14 +23,14 @@ const createToken = async () => {
   contract
       .deploy({
         data: tokenContract.bytecode,
-        arguments: [token.value.name, token.value.symbol, token.value.supply],
+        arguments: [token.value.name, token.value.symbol],
       })
       .send({ from: accounts[0] })
       .on('receipt', (receipt) => {
         const tokenData = {
           name: token.value.name,
           symbol: token.value.symbol,
-          supply: token.value.supply,
+          supply: 21000000,
           logoURL: token.value.logoURL,
           description: token.value.description,
           contractAddress: receipt.contractAddress,
