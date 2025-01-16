@@ -12,7 +12,7 @@ contract NewERC20 is ERC20, Ownable {
         // Constructor logic (if any) goes here
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) public onlyOwner payable {
         _mint(to, amount);
     }
 }

@@ -18,6 +18,7 @@ const getTokenInfo = useDebounceFn(async (e) => {
         erc20.abi,
         e.target.value
     );
+    token.address = e.target.value;
     token.name = await contract.methods.name().call();
     token.symbol = await contract.methods.symbol().call();
     token.decimals = await contract.methods.decimals().call();
@@ -27,7 +28,7 @@ const getTokenInfo = useDebounceFn(async (e) => {
     token.name = null;
     token.symbol = null;
     token.decimals = 21000000;
-    token.isLoading = false;
+    token.address = null;
   }
 
   token.isLoading = false;

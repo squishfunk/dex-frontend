@@ -14,6 +14,7 @@ const routes = [
     { path: '/swap', component: SwapView },
     { path: '/token/mint', component: () => import('@/components/pages/TokenMinterView.vue') },
     { path: '/token/launchpad', component: () => import('@/components/pages/LaunchpadView.vue') },
+    { path: '/launchpad-list', component: () => import('@/components/pages/LaunchpadListView.vue') },
     { path: '/liquidity', component: () => import('@/components/pages/CreateLiquidityView.vue') },
     { path: '/profile', component: () => import('@/components/pages/ProfilView.vue') },
 ]

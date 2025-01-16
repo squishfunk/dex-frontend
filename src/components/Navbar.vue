@@ -39,6 +39,9 @@ const account = computed(() => ethereumStore.account);
         <RouterLink to="/token/launchpad">Launchpad</RouterLink>
       </li>
       <li>
+        <RouterLink to="/launchpad-list">Launchpad List</RouterLink>
+      </li>
+      <li>
         <RouterLink to="/liquidity">Liquidity</RouterLink>
       </li>
 			<li>

@@ -8,12 +8,11 @@ import crowdsaleContractArtifact from "../../../../artifacts/contracts/Crowdsale
 
 const { token } = defineProps({token: Object})
 
-import erc20 from "@/assets/abi/ERC20.json";
 import {useEthereumStore} from "@/stores/ethereum.js";
 import {ref} from "vue";
+import axios from "axios";
 
 const ethereumStore = useEthereumStore();
-const tokenAddress = ref("");
 const rate = ref(0);
 const wallet = ref("");
 const openingTime = ref("");
@@ -23,12 +22,11 @@ const deploymentResult = ref("");
 
 const deployCrowdsale = async () => {
   try {
-
     const web3 = ethereumStore.web3;
     const accounts = await web3.eth.getAccounts();
 
     const fromAccount = accounts[0];
-
+    /* TODO DODAC OPCJE MINTOWANIA TOKENA NA SMARTKONTRAKCIE!!!!!!!!!!!!!!! */
     // Kontrakt Crowdsale ABI i bytecode
     const timedCrowdsaleBytecode = crowdsaleContractArtifact.bytecode;
 
@@ -42,7 +40,7 @@ const deployCrowdsale = async () => {
     const constructorArgs = [
       rate.value,          // rate: tokens per ETH
       wallet.value,        // wallet address
-      tokenAddress.value  // token address
+      token.address  // token address
     ];
 
     // Wysłanie transakcji do blockchain
@@ -53,10 +51,22 @@ const deployCrowdsale = async () => {
         })
         .send({ from: fromAccount });
 
+    const crowdsaleData = {
+      rate: rate.value,
+      deployerAddress: wallet.value,
+      contractAddress: deployedContract.options.address,
+      tokenAddress: token.address,
+    };
+
+    const response = await axios.post("http://127.0.0.1:8000/api/crowdsale", crowdsaleData);
+    // response.data;
+
     // Zapisanie adresu nowego kontraktu
-    console.log(deployedContract.options.address);
+    toast("Contract deployed at address: "+ deployedContract.options.address, {type: "success"})
     deploymentResult.value = deployedContract.options.address;
   } catch (error) {
+
+    toast("Deployment error: "+ error, {type: "error"})
     console.error("Deployment error:", error);
   }
 };
@@ -94,25 +104,25 @@ const setDefaultWallet = (e) => {
         <a @click="setDefaultWallet" href="#">Set my wallet address</a>
       </div>
 
-      <div class="form-group">
-        <label for="openingTime">Opening Time (UTC)</label>
-        <input
-            id="openingTime"
-            v-model="openingTime"
-            type="datetime-local"
-            required
-        />
-      </div>
+<!--      <div class="form-group">-->
+<!--        <label for="openingTime">Opening Time (UTC)</label>-->
+<!--        <input-->
+<!--            id="openingTime"-->
+<!--            v-model="openingTime"-->
+<!--            type="datetime-local"-->
+<!--            required-->
+<!--        />-->
+<!--      </div>-->
 
-      <div class="form-group">
-        <label for="closingTime">Closing Time (UTC)</label>
-        <input
-            id="closingTime"
-            v-model="closingTime"
-            type="datetime-local"
-            required
-        />
-      </div>
+<!--      <div class="form-group">-->
+<!--        <label for="closingTime">Closing Time (UTC)</label>-->
+<!--        <input-->
+<!--            id="closingTime"-->
+<!--            v-model="closingTime"-->
+<!--            type="datetime-local"-->
+<!--            required-->
+<!--        />-->
+<!--      </div>-->
 
       <button type="submit">Deploy Crowdsale Contract</button>
     </form>
