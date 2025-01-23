@@ -1,9 +1,8 @@
 <script setup>
-import {ref, watch} from 'vue';
+import {ref} from 'vue';
 import Step1 from './Step1.vue';
-import Step2 from "@/components/elements/LaunchpadForm/Step2.vue";
-// import Step2 from './Step2.vue';
-// import Step3 from './Step3.vue';
+import Step2 from "./Step2.vue";
+import Step3 from "./Step3.vue";
 
 const currentStep = ref(1);
 const token = ref({
@@ -36,14 +35,13 @@ const submitForm = () => {
       <div v-if="currentStep === 2">
         <Step2 :token="token" />
       </div>
-  <!--    <div v-if="currentStep === 3">-->
-  <!--      <Step3 :formData="formData" />-->
-  <!--    </div>-->
+      <div v-if="currentStep === 3">
+        <Step3 :token="token"  />
+      </div>
 
       <div class="navigation">
         <button v-if="currentStep > 1" @click="prevStep">Previous</button>
-        <button v-if="!token.isLoading && token.name" @click="nextStep">Next step</button>
-        <button v-if="currentStep === 3" @click="submitForm">Submit</button>
+        <button v-if="!token.isLoading && token.name && currentStep < 3" @click="nextStep">Next step</button>
       </div>
     </div>
 </template>

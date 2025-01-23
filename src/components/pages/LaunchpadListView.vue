@@ -64,13 +64,20 @@ onMounted(() => {
 
 <style scoped>
 .card {
+  margin: 50px auto;
   margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: var(--input-border-radius);
-  width: 100%;
+  width: 30%;
   padding: 20px;
+}
+
+@media (max-width: 800px) {
+  .card {
+    width: 90%;
+  }
 }
 
 h2 {

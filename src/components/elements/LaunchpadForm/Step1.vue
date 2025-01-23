@@ -6,22 +6,39 @@ const { token } = defineProps({token: Object})
 
 import erc20 from "@/assets/abi/ERC20.json";
 import {useEthereumStore} from "@/stores/ethereum.js";
+import axios from "axios";
 
 const ethereumStore = useEthereumStore();
 
 const getTokenInfo = useDebounceFn(async (e) => {
-  console.log(token.isLoading);
-  token.isLoading = true;
 
+  let contractAddress = null;
+  if(e.target.value){
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/tokens", {
+        params: { name: e.target.value }
+      });
+      console.log(response);
+      contractAddress = response.data[0].contractAddress;
+    } catch (error) {
+      console.error("Błąd podczas pobierania tokenów:", error);
+    }
+  }
+
+  token.isLoading = true;
+  if(!contractAddress){
+    contractAddress = e.target.value;
+  }
   try{
     const contract = new ethereumStore.web3.eth.Contract(
         erc20.abi,
-        e.target.value
+        contractAddress
     );
     token.address = e.target.value;
     token.name = await contract.methods.name().call();
     token.symbol = await contract.methods.symbol().call();
     token.decimals = await contract.methods.decimals().call();
+    token.totalSupply = await contract.methods.totalSupply().call();
   }catch (e){
     console.log(e);
     toast("Token has not been found", {type: "error"})
@@ -29,6 +46,7 @@ const getTokenInfo = useDebounceFn(async (e) => {
     token.symbol = null;
     token.decimals = 21000000;
     token.address = null;
+    token.totalSupply = null;
   }
 
   token.isLoading = false;

@@ -1,7 +1,5 @@
 <script setup>
 import {toast} from "vue3-toastify";
-import {useDebounceFn} from "@vueuse/core";
-import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
 import crowdsaleContractArtifact from "../../../../artifacts/contracts/Crowdsale.sol/Crowdsale.json";
@@ -64,6 +62,7 @@ const deployCrowdsale = async () => {
     // Zapisanie adresu nowego kontraktu
     toast("Contract deployed at address: "+ deployedContract.options.address, {type: "success"})
     deploymentResult.value = deployedContract.options.address;
+    token.crowdsaleAddress = deployedContract.options.address;
   } catch (error) {
 
     toast("Deployment error: "+ error, {type: "error"})
@@ -124,7 +123,7 @@ const setDefaultWallet = (e) => {
 <!--        />-->
 <!--      </div>-->
 
-      <button type="submit">Deploy Crowdsale Contract</button>
+      <button type="submit">Deploy crowdsale contract</button>
     </form>
   </div>
 </template>

@@ -23,14 +23,14 @@ const createToken = async () => {
   contract
       .deploy({
         data: tokenContract.bytecode,
-        arguments: [token.value.name, token.value.symbol],
+        arguments: [token.value.name, token.value.symbol, web3.utils.toWei(token.value.supply, "ether")],
       })
       .send({ from: accounts[0] })
       .on('receipt', (receipt) => {
         const tokenData = {
           name: token.value.name,
           symbol: token.value.symbol,
-          supply: 21000000,
+          supply: token.value.supply,
           logoURL: token.value.logoURL,
           description: token.value.description,
           contractAddress: receipt.contractAddress,

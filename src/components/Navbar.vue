@@ -60,12 +60,21 @@ const account = computed(() => ethereumStore.account);
 			<li>
 				<RouterLink class="logo" to="/"><Logo/></RouterLink>
 			</li>
-			<li class="hideOnMobile">
-				<RouterLink to="/">Swap</RouterLink>
-			</li>
-			<li class="hideOnMobile">
+      <li>
+        <RouterLink to="/swap">Swap</RouterLink>
+      </li>
+      <li>
         <RouterLink to="/token/mint">Token minter</RouterLink>
-			</li>
+      </li>
+      <li>
+        <RouterLink to="/token/launchpad">Launchpad</RouterLink>
+      </li>
+      <li>
+        <RouterLink to="/launchpad-list">Launchpad List</RouterLink>
+      </li>
+      <li>
+        <RouterLink to="/liquidity">Liquidity</RouterLink>
+      </li>
 			<li class="hideOnMobile">
         <template v-if="account">
           <RouterLink to="/profile">{{ ethereumStore.walletAddress }}</RouterLink>

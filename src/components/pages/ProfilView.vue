@@ -110,8 +110,14 @@ onMounted(async () => {
   flex-direction: column;
   align-items: center;
   border-radius: var(--input-border-radius);
-  width: 90%;
+  width: 30%;
   padding: 20px;
+}
+
+@media (max-width: 800px) {
+  .card {
+    width: 90%;
+  }
 }
 
 hr {
